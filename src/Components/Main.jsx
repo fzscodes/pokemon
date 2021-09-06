@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchBar from "./Header";
 import Pagination from "@material-ui/lab/Pagination";
-import MenuItem from "@material-ui/core/MenuItem";
+import { MenuItem, Select, InputLabel } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
 import Pokemons from "./Pokemons";
 import axios from "axios";
 
@@ -43,10 +41,22 @@ const useStyles = makeStyles((theme) => ({
 const Main = () => {
   let [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
-  const [searchKeyWord, setSearchKeyWord] = useState("");
-  const [sortingParameter, setSortingParameter] = useState(1);
-  const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(10);
+  const searchKeyWordLocalStore = localStorage.getItem("searchKeyWord");
+  const [searchKeyWord, setSearchKeyWord] = useState(
+    searchKeyWordLocalStore ? searchKeyWordLocalStore : ("")
+  );
+  const sortParamLocalStore = Number(localStorage.getItem("sortingParameter"));
+  const [sortingParameter, setSortingParameter] = useState(
+    Number.isInteger(sortParamLocalStore) ? sortParamLocalStore : 1
+  );
+  const numberOfItemsPerPageLocalStore = Number(
+    localStorage.getItem("numberOfItemsPerPage")
+  );
+  const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(
+    Number.isInteger(numberOfItemsPerPageLocalStore)
+      ? numberOfItemsPerPageLocalStore
+      : 10
+  );
   const classes = useStyles();
   const baseUrl = "https://pokeapi.co/api/v2/pokemon";
 
@@ -56,12 +66,23 @@ const Main = () => {
   let [pokemonData, setPokemonData] = useState([]);
   const [nextUrl, setNextUrl] = useState("");
   const [prevUrl, setPrevUrl] = useState("");
-
   const [currentUrl, setCurrentUrl] = useState(initialUrl);
 
   useEffect(() => {
     fetchPokemons();
   }, [currentUrl]);
+
+  useEffect(() => {
+    localStorage.setItem("sortingParameter", sortingParameter);
+  }, [sortingParameter]);
+
+  useEffect(() => {
+    localStorage.setItem("numberOfItemsPerPage", numberOfItemsPerPage);
+  }, [numberOfItemsPerPage]);
+
+  useEffect(() => {
+    localStorage.setItem("searchKeyWord", searchKeyWord);
+  }, [searchKeyWord]);
 
   async function fetchPokemons() {
     console.log("fetching: " + numberOfItemsPerPage);
@@ -162,7 +183,6 @@ const Main = () => {
     }
   });
 
-  // window.location.reload(true);
   return (
     <>
       <SearchBar
