@@ -2,18 +2,15 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchBar from "./Header";
 import Pagination from "@material-ui/lab/Pagination";
-import { MenuItem, Select, InputLabel } from "@material-ui/core";
-import FormControl from "@material-ui/core/FormControl";
+import { MenuItem, Select, InputLabel, FormControl } from "@material-ui/core";
 import Pokemons from "./Pokemons";
 import axios from "axios";
 
-// @ts-ignore
 const useStyles = makeStyles((theme) => ({
   pagination: {
     "& > *": {
       marginTop: theme.spacing(4),
       marginBottom: theme.spacing(4),
-
       display: "flex",
       justifyContent: "center",
       alignItem: "center",
@@ -43,7 +40,7 @@ const Main = () => {
   const [totalPages, setTotalPages] = useState(1);
   const searchKeyWordLocalStore = localStorage.getItem("searchKeyWord");
   const [searchKeyWord, setSearchKeyWord] = useState(
-    searchKeyWordLocalStore ? searchKeyWordLocalStore : ("")
+    searchKeyWordLocalStore ? searchKeyWordLocalStore : ""
   );
   const sortParamLocalStore = Number(localStorage.getItem("sortingParameter"));
   const [sortingParameter, setSortingParameter] = useState(
@@ -85,8 +82,6 @@ const Main = () => {
   }, [searchKeyWord]);
 
   async function fetchPokemons() {
-    console.log("fetching: " + numberOfItemsPerPage);
-    console.log(currentUrl);
     const response = await axios.get(currentUrl);
     const result = response.data.results;
     setTotalPages(Math.floor(response.data.count / numberOfItemsPerPage));
@@ -114,7 +109,6 @@ const Main = () => {
   };
 
   const handlePagination = (e, value) => {
-    console.log("Page Clicked=" + value);
     if (value === currentPage + 1) {
       setCurrentPage(value);
       goToNextPage();

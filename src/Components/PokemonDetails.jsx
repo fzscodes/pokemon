@@ -1,13 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import { AppBar, Toolbar, Typography, Grid, Card } from "@material-ui/core";
 import { ArrowBackIos } from "@material-ui/icons";
 import IconButton from "@material-ui/core/ListItemIcon";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   cardDiv: {
@@ -31,41 +27,25 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   card: {
-    // padding: theme.spacing(24),
-    // marginTop: "2%",
     marginLeft: "10%",
     marginRight: "10%",
     maxWidth: "100%",
-    // minHeight: "70vh",
     backgroundColor: "whitesmoke",
-    
   },
-  // imageGrid: {
-  //   width: "50vh",
-  //   height: "50vh",
-  //   margin: "auto",
-  // },
-  // img: {
-  //   marginLeft: "30%",
-  // // display: "block",
-  // paddingTop: "10%",
-  // },
+  img: {
+    marginLeft: "10%",
+  },
   secondaryHeaders: {
     color: "darkmagenta",
     marginRight: "1%",
   },
   pokemonInfoGrid: {
     marginTop: "3%",
-
   },
   pokemonInfo: {
     display: "flex",
-     marginLeft:"30%",
-   
-    //  justifyContent: "center",
-    // alignItems: "center",
+    marginLeft: "30%",
     padding: "1%",
-   
   },
   pokemonName: {
     color: "darkmagenta",
@@ -73,17 +53,15 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     padding: "2%",
   },
-  mainGridContainer:{
-    display:"flex",
-    justifyContent:"space-between",
-
-  }
+  mainGridContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
 }));
 
 const PokemonDetails = () => {
   const history = useHistory();
   const classes = useStyles();
-  console.log(history.location);
   const pokemon = history.location.state;
 
   return (
@@ -102,13 +80,11 @@ const PokemonDetails = () => {
         </Toolbar>
       </AppBar>
       <div className={classes.cardDiv}>
-        <Card
-          className={classes.card}>
+        <Card className={classes.card}>
           <Typography gutterBottom variant="h3" className={classes.pokemonName}>
             {pokemon.name.toUpperCase()}
           </Typography>
-          <Grid container
-            className={classes.mainGridContainer}>
+          <Grid container className={classes.mainGridContainer}>
             <Grid item>
               <img
                 className={classes.img}
@@ -116,8 +92,7 @@ const PokemonDetails = () => {
                 src={pokemon.sprites.other.dream_world.front_default}
               />
             </Grid>
-            <Grid item xs
-              className={classes.pokemonInfoGrid}>
+            <Grid item xs className={classes.pokemonInfoGrid}>
               <div className={classes.pokemonInfo}>
                 <Typography variant="h6" className={classes.secondaryHeaders}>
                   Height:
@@ -136,11 +111,7 @@ const PokemonDetails = () => {
                 </Typography>
                 {pokemon.abilities.map((i, index) => {
                   return (
-                    <Typography
-                      key={index}
-                      // className={classes.abilities}
-                      variant="body1"
-                    >
+                    <Typography key={index} variant="body1">
                       {i.ability.name},
                     </Typography>
                   );

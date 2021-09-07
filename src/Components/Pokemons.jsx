@@ -12,9 +12,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  root:{
-flexGrow:1,
-backgroundColor:"lavender",
+  root: {
+    flexGrow: 1,
+    backgroundColor: "lavender",
   },
   imgCard: {
     paddingTop: "5%",
@@ -22,11 +22,6 @@ backgroundColor:"lavender",
     width: "40%",
     paddingBottom: "5%",
   },
-  // cardContent: {
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
   name: {
     textAlign: "center",
     paddingTop: "5%",
@@ -43,24 +38,21 @@ backgroundColor:"lavender",
     justifyContent: "space-evenly",
   },
   card: {
-  //   maxHeight: "40%",
-  //  minWidth:"80%",
     backgroundColor: "whitesmoke",
     "&:hover": {
       cursor: "pointer",
       transform: "scale3d(1.05, 1.05, 1)",
       backgroundColor: "white",
-
     },
   },
   abilities: {
     display: "flex",
     justifyContent: "space-around",
-    marginRight:"2%",
+    marginRight: "2%",
   },
   secondaryHeaders: {
     color: "darkmagenta",
-   marginRight: "1%",
+    marginRight: "1%",
   },
 }));
 
@@ -71,94 +63,93 @@ const Pokemons = (props) => {
 
   return (
     <>
-    <div className={classes.root}>
-      <Grid
-        container
-        spacing={10}
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-        //
-      >
-        {pokemonData.map((item) => (
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={4}
-            lg={3}
-            key={pokemonData.indexOf(item)}
-            // className={classes.gridItem}
-          >
-            <Card
-               className={classes.card}
-              onClick={() => {
-                history.push({
-                  pathname: "/pokemonDetails",
-                  state: item,
-                });
-              }}
+      <div className={classes.root}>
+        <Grid
+          container
+          spacing={10}
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+          //
+        >
+          {pokemonData.map((item) => (
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              key={pokemonData.indexOf(item)}
             >
-              <CardMedia
-                className={classes.imgCard}
-                component="img"
-                alt="Pokemon images"
-                image={item.sprites.other.dream_world.front_default}
-                title="Pokemon images"
-              />
-              <CardHeader
-                titleTypographyProps={{ variant: "h4" }}
-                title={item.name.toUpperCase()}
-                className={classes.name}
-              />
-              <Divider variant="middle" />
-              <div className={classes.cardContent}>
-                <CardContent>
-                  <div className={classes.height_width}>
-                    <div className={classes.pokemonInfo}>
-                      <Typography
-                        variant="h6"
-                        className={classes.secondaryHeaders}
-                      >
-                        Height:
-                      </Typography>
-                      <Typography>{item.height}</Typography>
-                    </div>
-                    <div className={classes.pokemonInfo}>
-                      <Typography
-                        variant="h6"
-                        className={classes.secondaryHeaders}
-                      >
-                        Weight:
-                      </Typography>
-                      <Typography>{item.weight}</Typography>
-                    </div>
-                  </div>
-                  <div className={classes.pokemonInfo}>
-                    <Typography
-                      variant="h6"
-                      className={classes.secondaryHeaders}
-                    >
-                      Abilities:
-                    </Typography>
-                    {item.abilities.map((i, index) => {
-                      return (
+              <Card
+                className={classes.card}
+                onClick={() => {
+                  history.push({
+                    pathname: "/pokemonDetails",
+                    state: item,
+                  });
+                }}
+              >
+                <CardMedia
+                  className={classes.imgCard}
+                  component="img"
+                  alt="Pokemon images"
+                  image={item.sprites.other.dream_world.front_default}
+                  title="Pokemon images"
+                />
+                <CardHeader
+                  titleTypographyProps={{ variant: "h4" }}
+                  title={item.name.toUpperCase()}
+                  className={classes.name}
+                />
+                <Divider variant="middle" />
+                <div className={classes.cardContent}>
+                  <CardContent>
+                    <div className={classes.height_width}>
+                      <div className={classes.pokemonInfo}>
                         <Typography
-                          key={index}
-                          className={classes.abilities}
-                          variant="body"
+                          variant="h6"
+                          className={classes.secondaryHeaders}
                         >
-                          {i.ability.name},
+                          Height:
                         </Typography>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </div>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+                        <Typography>{item.height}</Typography>
+                      </div>
+                      <div className={classes.pokemonInfo}>
+                        <Typography
+                          variant="h6"
+                          className={classes.secondaryHeaders}
+                        >
+                          Weight:
+                        </Typography>
+                        <Typography>{item.weight}</Typography>
+                      </div>
+                    </div>
+                    <div className={classes.pokemonInfo}>
+                      <Typography
+                        variant="h6"
+                        className={classes.secondaryHeaders}
+                      >
+                        Abilities:
+                      </Typography>
+                      {item.abilities.map((i, index) => {
+                        return (
+                          <Typography
+                            key={index}
+                            className={classes.abilities}
+                            variant="body"
+                          >
+                            {i.ability.name},
+                          </Typography>
+                        );
+                      })}
+                    </div>
+                  </CardContent>
+                </div>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       </div>
     </>
   );
