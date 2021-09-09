@@ -1,9 +1,26 @@
 import React from "react"
 import Header from "../Header";
-import {render} from "@testing-library/react";
-import "testing-library/jest-dom/extended-expect";
+import { render, unmountComponentAtNode } from "react-dom";
+import { act } from "react-dom/test-utils";
 
-test("header renders the correct text",()=>{
-    const {getByTestId} = render(<Header/>);
-    
-})
+let container = null;
+beforeEach(() => {
+  // setup a DOM element as a render target
+  container = document.createElement("div");
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
+
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+});
+
+it("renders the header, with searchBox", () => {
+    act(() => {
+        render(<Header/>, container);
+    });
+    expect(container.textContent).toBe("POKEMONS");
+   
+});
