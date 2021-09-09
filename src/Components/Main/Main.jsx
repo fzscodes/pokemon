@@ -15,22 +15,22 @@ const Main = () => {
     searchKeyWordLocalStore ? searchKeyWordLocalStore : ""
   );
   const sortParamLocalStore = Number(localStorage.getItem("sortingParameter"));
+  
   const [sortingParameter, setSortingParameter] = useState(
-    Number.isInteger(sortParamLocalStore) ? sortParamLocalStore : 1
+    (Number.isInteger(sortParamLocalStore) && sortParamLocalStore > 0) ? sortParamLocalStore : 1
   );
   const numberOfItemsPerPageLocalStore = Number(
     localStorage.getItem("numberOfItemsPerPage")
   );
   const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(
-    Number.isInteger(numberOfItemsPerPageLocalStore)
+    (Number.isInteger(numberOfItemsPerPageLocalStore) && numberOfItemsPerPageLocalStore > 0)
       ? numberOfItemsPerPageLocalStore
       : 10
   );
   const classes = useStyles();
   const baseUrl = "https://pokeapi.co/api/v2/pokemon";
 
-  let initialUrl =
-    baseUrl + "?limit=" + `${numberOfItemsPerPage}` + "&offset=0";
+  let initialUrl = baseUrl.concat("?limit=",`${numberOfItemsPerPage}`, "&offset=0");
 
   let [pokemonData, setPokemonData] = useState([]);
   const [nextUrl, setNextUrl] = useState("");
