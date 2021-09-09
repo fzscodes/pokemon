@@ -1,8 +1,8 @@
 import React from "react";
-import Main from "./Components/Main";
+import Main from "./Components//Main/Main.jsx";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
-import PokemonDetails from "./Components/PokemonDetails";
+import PokemonDetails from "./Components/PokemonDetails/PokemonDetails.jsx";
 
 function App() {
   return (

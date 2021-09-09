@@ -1,39 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import SearchBar from "./Header";
+import Header from "../Header/Header";
 import Pagination from "@material-ui/lab/Pagination";
 import { MenuItem, Select, InputLabel, FormControl } from "@material-ui/core";
-import Pokemons from "./Pokemons";
+import Pokemons from "../Pokemons/Pokemons";
 import axios from "axios";
+import {useStyles} from './Main.Styles';
 
-const useStyles = makeStyles((theme) => ({
-  pagination: {
-    "& > *": {
-      marginTop: theme.spacing(4),
-      marginBottom: theme.spacing(4),
-      display: "flex",
-      justifyContent: "center",
-      alignItem: "center",
-    },
-  },
-  root: {
-    flexGrow: 1,
-    padding: theme.spacing(6),
-    backgroundColor: "lavender",
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  section2: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  formControlDiv: {
-    display: "flex",
-    flexDirection: "flex-start",
-  },
-}));
 
 const Main = () => {
   let [currentPage, setCurrentPage] = useState(1);
@@ -179,7 +151,7 @@ const Main = () => {
 
   return (
     <>
-      <SearchBar
+      <Header
         searchKeyWord={searchKeyWord}
         setSearchKeyWord={setSearchKeyWord}
       />
