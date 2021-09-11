@@ -1,12 +1,11 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, InputBase } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { getByTestId } from "@testing-library/dom";
 import { useStyles } from "./Header.Styles";
 
 export default function Header(props) {
   const classes = useStyles();
-  const { searchKeyWord, setSearchKeyWord } = props;
+  const { setSearchKeyWord } = props;
 
   const onSearchSubmitHandler = (e) => {
     e.preventDefault();
@@ -14,7 +13,7 @@ export default function Header(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
             POKEMONS
@@ -31,7 +30,6 @@ export default function Header(props) {
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
-              value={searchKeyWord}
               onChange={(e) => setSearchKeyWord(e.target.value)}
             />
           </div>

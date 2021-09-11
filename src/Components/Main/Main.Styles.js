@@ -10,16 +10,16 @@ const useStyles = makeStyles((theme) => ({
       alignItem: "center",
     },
   },
-  root: {
+  rootMain: {
     flexGrow: 1,
-    padding: theme.spacing(6),
+    padding: theme.spacing(12),
     backgroundColor: "lavender",
   },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
   },
-  section2: {
+  sortingAndPagination: {
     display: "flex",
     justifyContent: "space-between",
   },

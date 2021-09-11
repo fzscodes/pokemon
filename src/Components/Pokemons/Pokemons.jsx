@@ -1,32 +1,34 @@
 import React from "react";
 import {
   Card,
-  CardContent,
   CardHeader,
   CardMedia,
   Divider,
+  Box,
   Grid,
-  Typography,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import {useStyles} from './Pokemons.Styles';
-
+import { useStyles } from "./Pokemons.Styles";
+import { useGutterBorderedGridStyles } from "@mui-treasury/styles/grid/gutterBordered";
 
 const Pokemons = (props) => {
   const classes = useStyles();
   const { pokemonData } = props;
   const history = useHistory();
+  const borderedGridStyles = useGutterBorderedGridStyles({
+    borderColor: "rgba(0, 0, 0, 0.08)",
+    height: "50%",
+  });
 
   return (
     <>
-      <div className={classes.root}>
+      <div className={classes.rootPokemons}>
         <Grid
           container
           spacing={10}
           direction="row"
-          justify="flex-start"
+          justifyContent="flex-start"
           alignItems="flex-start"
-          //
         >
           {pokemonData.map((item) => (
             <Grid
@@ -54,54 +56,31 @@ const Pokemons = (props) => {
                   title="Pokemon images"
                 />
                 <CardHeader
+                  id="pokemon-name"
                   titleTypographyProps={{ variant: "h4" }}
                   title={item.name.toUpperCase()}
                   className={classes.name}
                 />
                 <Divider variant="middle" />
-                <div className={classes.cardContent}>
-                  <CardContent>
-                    <div className={classes.height_width}>
-                      <div className={classes.pokemonInfo}>
-                        <Typography
-                          variant="h6"
-                          className={classes.secondaryHeaders}
-                        >
-                          Height:
-                        </Typography>
-                        <Typography>{item.height}</Typography>
-                      </div>
-                      <div className={classes.pokemonInfo}>
-                        <Typography
-                          variant="h6"
-                          className={classes.secondaryHeaders}
-                        >
-                          Weight:
-                        </Typography>
-                        <Typography>{item.weight}</Typography>
-                      </div>
-                    </div>
-                    <div className={classes.pokemonInfo}>
-                      <Typography
-                        variant="h6"
-                        className={classes.secondaryHeaders}
-                      >
-                        Abilities:
-                      </Typography>
-                      {item.abilities.map((i, index) => {
-                        return (
-                          <Typography
-                            key={index}
-                            className={classes.abilities}
-                            variant="body"
-                          >
-                            {i.ability.name},
-                          </Typography>
-                        );
-                      })}
-                    </div>
-                  </CardContent>
-                </div>
+                <Box display={"flex"} className={classes.pokemonInfo}>
+                  <Box p={2} flex={"auto"} className={borderedGridStyles.item}>
+                    <p className={classes.statLabel}>Height:</p>
+                    <p className={classes.statValue}>{item.height} </p>
+                  </Box>
+                  <Box p={2} flex={"auto"} className={borderedGridStyles.item}>
+                    <p className={classes.statLabel}>Weight:</p>
+                    <p className={classes.statValue}>{item.weight}</p>
+                  </Box>
+                </Box>
+                <Divider variant="middle" />
+                <Box p={2} flex={"auto"} className={borderedGridStyles.item}>
+                  <p className={classes.statLabel}> Abilities: </p>
+                  <p className={classes.statValue}>
+                    {item.abilities.map((i, index) => {
+                      return <>{i.ability.name}, </>;
+                    })}
+                  </p>
+                </Box>
               </Card>
             </Grid>
           ))}

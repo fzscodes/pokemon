@@ -4,8 +4,8 @@ import Pagination from "@material-ui/lab/Pagination";
 import { MenuItem, Select, InputLabel, FormControl } from "@material-ui/core";
 import Pokemons from "../Pokemons/Pokemons";
 import axios from "axios";
-import {useStyles} from './Main.Styles';
-
+import { useStyles } from "./Main.Styles";
+import Footer from "../Header/Footer";
 
 const Main = () => {
   let [currentPage, setCurrentPage] = useState(1);
@@ -15,22 +15,29 @@ const Main = () => {
     searchKeyWordLocalStore ? searchKeyWordLocalStore : ""
   );
   const sortParamLocalStore = Number(localStorage.getItem("sortingParameter"));
-  
+
   const [sortingParameter, setSortingParameter] = useState(
-    (Number.isInteger(sortParamLocalStore) && sortParamLocalStore > 0) ? sortParamLocalStore : 1
+    Number.isInteger(sortParamLocalStore) && sortParamLocalStore > 0
+      ? sortParamLocalStore
+      : 1
   );
   const numberOfItemsPerPageLocalStore = Number(
     localStorage.getItem("numberOfItemsPerPage")
   );
   const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(
-    (Number.isInteger(numberOfItemsPerPageLocalStore) && numberOfItemsPerPageLocalStore > 0)
+    Number.isInteger(numberOfItemsPerPageLocalStore) &&
+      numberOfItemsPerPageLocalStore > 0
       ? numberOfItemsPerPageLocalStore
       : 10
   );
   const classes = useStyles();
   const baseUrl = "https://pokeapi.co/api/v2/pokemon";
 
-  let initialUrl = baseUrl.concat("?limit=",`${numberOfItemsPerPage}`, "&offset=0");
+  let initialUrl = baseUrl.concat(
+    "?limit=",
+    `${numberOfItemsPerPage}`,
+    "&offset=0"
+  );
 
   let [pokemonData, setPokemonData] = useState([]);
   const [nextUrl, setNextUrl] = useState("");
@@ -53,24 +60,24 @@ const Main = () => {
     localStorage.setItem("searchKeyWord", searchKeyWord);
   }, [searchKeyWord]);
 
-  async function fetchPokemons() {
+  const fetchPokemons = async () => {
     const response = await axios.get(currentUrl);
     const result = response.data.results;
     setTotalPages(Math.floor(response.data.count / numberOfItemsPerPage));
     setNextUrl(response.data.next);
     setPrevUrl(response.data.previous);
     fetchPokemonDetails(result);
-  }
+  };
 
-  async function fetchPokemonDetails(result) {
+  const fetchPokemonDetails = async (pokemonList) => {
     let tempArray = [];
-    result.forEach(async (pokemon) => {
+    pokemonList.forEach(async (pokemon) => {
       const res = await axios.get(`${pokemon.url}`);
       let pokemonDetailsObjects = res.data;
       tempArray = [...tempArray, pokemonDetailsObjects];
       setPokemonData(tempArray);
     });
-  }
+  };
 
   const goToNextPage = () => {
     setCurrentUrl(nextUrl);
@@ -89,12 +96,12 @@ const Main = () => {
       goToPreviousPage();
     } else {
       setCurrentPage(value);
-      let url =
-        baseUrl +
-        "?limit=" +
-        `${numberOfItemsPerPage}` +
-        "&offset=" +
-        `${numberOfItemsPerPage * (value - 1)}`;
+      let url = baseUrl.concat(
+        "?limit=",
+        `${numberOfItemsPerPage}`,
+        "&offset=",
+        `${numberOfItemsPerPage * (value - 1)}`
+      );
       setCurrentUrl(url);
     }
   };
@@ -109,12 +116,12 @@ const Main = () => {
       setCurrentPage(1);
     }
     setNumberOfItemsPerPage(event.target.value);
-    let url =
-      baseUrl +
-      "?limit=" +
-      `${event.target.value}` +
-      "&offset=" +
-      `${event.target.value * (currentPage - 1)}`;
+    let url = baseUrl.concat(
+      "?limit=",
+      `${event.target.value}`,
+      "&offset=",
+      `${event.target.value * (currentPage - 1)}`
+    );
     setCurrentUrl(url);
   };
 
@@ -151,12 +158,9 @@ const Main = () => {
 
   return (
     <>
-      <Header
-        searchKeyWord={searchKeyWord}
-        setSearchKeyWord={setSearchKeyWord}
-      />
-      <div className={classes.root}>
-        <div className={classes.section2}>
+      <Header setSearchKeyWord={setSearchKeyWord} />
+      <div className={classes.rootMain}>
+        <div className={classes.sortingAndPagination}>
           <div className={classes.formControlDiv}>
             <div>
               <FormControl className={classes.formControl}>
@@ -209,6 +213,7 @@ const Main = () => {
             onChange={handlePagination}
           />
         </div>
+        <Footer />
       </div>
     </>
   );
